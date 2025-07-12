@@ -16,8 +16,7 @@ int main(void)
 {
     std::printf("HARRY CLARK - SH2 EMITTER\n");
 
-    maria::GP_REGISTER SH2_R0{0};
-    std::printf("R0 VALUE: %d\n", SH2_R0.GET_INDEX());
+    std::printf("R0 VALUE: %d\n", maria::SH2_REGISTERS::R0.GET_INDEX());
 
     maria::PC SH2_PC;
     std::printf("PC VALUE: %d\n", SH2_PC.GET_INDEX());
