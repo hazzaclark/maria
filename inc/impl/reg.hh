@@ -26,10 +26,7 @@ namespace maria
         // OPTIMISE SPACE FOR DEFINING A REGISTER BUFFER
         // USING STATIC CASTING
         constexpr explicit REGISTER(int INDEX)
-            : SH2_REG_INDEX(static_cast<std::int8_t>(INDEX))
-            {
-                assert(INDEX >= 0 && INDEX <= 15);
-            }
+            : SH2_REG_INDEX(static_cast<std::int8_t>(INDEX)) { }
 
             constexpr int GET_INDEX() const { return SH2_REG_INDEX; }
 
@@ -41,15 +38,16 @@ namespace maria
     struct GP_REGISTER : public REGISTER
     {
         GP_REGISTER() noexcept : REGISTER{0} {}
-        constexpr explicit GP_REGISTER(int INDEX) : REGISTER(INDEX) {}
+        constexpr explicit GP_REGISTER(int INDEX) : REGISTER(INDEX) 
+        {
+            assert(INDEX >= 0 && INDEX <= 15);
+        }
         
         friend constexpr bool operator == (GP_REGISTER, GP_REGISTER);
     };
 
-    struct PC : public GP_REGISTER
-    {
-        constexpr PC() : GP_REGISTER(15) {}
-    };
+    struct PC : public GP_REGISTER { constexpr PC() : GP_REGISTER(15) {} };
+    struct SR : public REGISTER { constexpr SR() noexcept : REGISTER{16} {} };
 
     // GLOBAL DEFINITION FOR THE OPERATION
     // THIS LOOKS FOR COMPARATOR'S
