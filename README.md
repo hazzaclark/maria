@@ -9,9 +9,9 @@ This reference utility, created in the C++17 standard, aims to provide liaise in
 
 # Usage:
 
-So far, this project is still very much a WIP though, I am to provide some API examples of working with the Code Generator to showcase the likeness.
-
 The following aims to showcase the innate design of how I am able to access register values using the operators defined per the API
+
+All of which is subject to change of course as the project grows
 
 ```cpp
 using namespace maria;
