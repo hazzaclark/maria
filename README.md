@@ -11,6 +11,27 @@ This reference utility, created in the C++17 standard, aims to provide liaise in
 
 So far, this project is still very much a WIP though, I am to provide some API examples of working with the Code Generator to showcase the likeness.
 
+The following aims to showcase the innate design of how I am able to access register values using the operators defined per the API
+
+```cpp
+using namespace maria;
+
+int main(void)
+{
+    std::printf("HARRY CLARK - SH2 EMITTER\n");
+
+    // ACCESS THE VALUE FOR R0
+    maria::GP_REGISTER SH2_R0(0);
+    std::printf("R0 VALUE: %d\n", SH2_R0.GET_INDEX());
+
+    // ACCESS THE VALUE FOR PC
+    maria::PC SH2_PC;
+    std::printf("PC VALUE: %d\n", SH2_PC.GET_INDEX());
+    
+    return 0;
+}
+```
+
 # Building:
 
 To build this project, you will need a C++ compiler which supports CMake 3.20. From there, it is just a case of:
