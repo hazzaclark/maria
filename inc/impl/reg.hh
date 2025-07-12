@@ -38,16 +38,10 @@ namespace maria
     struct GP_REGISTER : public REGISTER
     {
         GP_REGISTER() noexcept : REGISTER{0} {}
-        constexpr explicit GP_REGISTER(int INDEX) : REGISTER(INDEX) 
-        {
-            assert(INDEX >= 0 && INDEX <= 15);
-        }
-        
+        constexpr explicit GP_REGISTER(uint32_t INDEX) noexcept : REGISTER{INDEX} {}
+
         friend constexpr bool operator == (GP_REGISTER, GP_REGISTER);
     };
-
-    struct PC : public GP_REGISTER { constexpr PC() : GP_REGISTER(15) {} };
-    struct SR : public REGISTER { constexpr SR() noexcept : REGISTER{16} {} };
 
     // GLOBAL DEFINITION FOR THE OPERATION
     // THIS LOOKS FOR COMPARATOR'S
