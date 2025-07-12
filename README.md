@@ -22,11 +22,11 @@ int main(void)
 
     // ACCESS THE VALUE FOR R0
     maria::GP_REGISTER SH2_R0(0);
-    std::printf("R0 VALUE: %d\n", SH2_R0.GET_INDEX());
+    std::printf("R0 VALUE: %d\n", SH2_R0.GET_INDEX());         // OUTPUT: 0
 
     // ACCESS THE VALUE FOR PC
     maria::PC SH2_PC;
-    std::printf("PC VALUE: %d\n", SH2_PC.GET_INDEX());
+    std::printf("PC VALUE: %d\n", SH2_PC.GET_INDEX());        // OUTPUT: 15
     
     return 0;
 }
