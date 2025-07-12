@@ -43,11 +43,18 @@ namespace maria
         GP_REGISTER() noexcept : REGISTER{0} {}
         constexpr explicit GP_REGISTER(int INDEX) : REGISTER(INDEX) {}
         
-        friend constexpr bool operator==(GP_REGISTER, GP_REGISTER);
+        friend constexpr bool operator == (GP_REGISTER, GP_REGISTER);
     };
 
     struct PC : public GP_REGISTER
     {
         constexpr PC() : GP_REGISTER(15) {}
     };
+
+    // GLOBAL DEFINITION FOR THE OPERATION
+    // THIS LOOKS FOR COMPARATOR'S
+    constexpr bool operator==(GP_REGISTER REG_A, GP_REGISTER REG_B)
+    {
+        return REG_A.GET_INDEX() == REG_B.GET_INDEX();
+    }
 }
