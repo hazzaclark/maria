@@ -33,6 +33,7 @@ namespace maria
     template<typename T>
     constexpr auto SH2_BIT(T POSITION) -> typename std::enable_if<std::is_unsigned<T>::VALUE, U32>::TYPE
     {
+        static_assert(std::numeric_limits<T>::digits <= 32, "POSITION TOO LARGE FOR U32 RESULT");
         return 1U << static_cast<U32>(POSITION);
     }
 }
