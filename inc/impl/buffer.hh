@@ -23,6 +23,8 @@ namespace maria
         public:
             static constexpr UNK SH2_DEFAULT_BUFFER = 4096;
 
+            explicit BUFFER(UNK CAPACITY = SH2_DEFAULT_BUFFER);
+
             BUFFER(const BUFFER&) = delete;
             BUFFER(BUFFER&& BUFFER_MOVE) noexcept;
             BUFFER& operator=(const BUFFER&) = delete;
