@@ -12,9 +12,23 @@
 
 #include <impl/buffer.hh>
 
+// SYSTEM INCLUDES
+
+#include <cstring>
+#include <utility>
+
 namespace maria
 {
     // SELF ENCAPSULATED MEMORY FLAGS FOR RUNTIME 
     BUFFER::BUFFER(UNK CAPACITY)
-        :_CAPACITY(CAPACITY), _MANAGE{true} { if(CAPACITY == 0) return;  }
+        :_CAPACITY(CAPACITY), _MANAGE{true} 
+        { 
+            if(CAPACITY == 0) return;
+            
+            // TO BE A *bit more* POSIX COMPLIANT, WE WILL JUST PRESUPPOSE
+            // A RAW DEFINED MEMORY BUFFER WITHIN THE CURRENT CIRCUMSTANCE
+
+            _BUFFER = new U8[CAPACITY]();
+            _CURSOR = _BUFFER; 
+        }
 }
