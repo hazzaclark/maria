@@ -27,6 +27,9 @@ namespace maria
             SH2_DMAC() noexcept = default;
             ~SH2_DMAC() noexcept;
 
+            bool IS_ENABLED(U8 CHANNEL) const;
+            void SH2_DMAC_ENABLED(U8 CHANNEL, bool STATE);
+
             // DEFINE THE REGISTERS FOR THE DMA CHANNEL
             struct SH2_CHN
             {
@@ -39,7 +42,8 @@ namespace maria
         private:
             U32 XREF_COUNT : 24;           // XREF COUNT FOR TLB PAGING  
             SH2_CHN CHANNELS[4];                // DMA CHANNELS
-            bool ENABLED() const;               // IS THE DMA ENABLED FOR THE CURRENT CHANNEL BEING USED    
             SH2_DMA_BUS CURRENT_BUS;            // WHICH CURRENT BUS IS BEING USED (0 OR 1)
-        };
+
+            bool IS_CHN_VALID(U8 CHANNEL) const;
+    };
 }
