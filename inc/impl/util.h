@@ -36,6 +36,21 @@ namespace maria
         static_assert(std::numeric_limits<T>::digits <= 32, "POSITION TOO LARGE FOR U32 RESULT");
         return 1U << static_cast<U32>(POSITION);
     }
+
+    // DO THE SAME BUT FOR A BITFIELD OF CONTIGUOUS BITS
+    // THIS PRESUPPOSES THE SIZE OF A BITFIELD BASED ON A START
+    // AND A DISPLACEMENT VALUE TO USE SAID BITS IN THAT RANGE
+
+    template<typename T, typename U>
+    constexpr auto SH2_BITFIELD(T POSITION, U WIDTH) ->
+        typename std::enable_if<std::is_unsigned<T>::VALUE && std::is_unsigned<U>::VALUE, U32>::TYPE
+        {
+            static_assert(static_cast<U32>(POSITION) + static_cast<U32>(WIDTH) <= 32, 
+                  "BITFIELD EXCEEDS 32-BIT BOUNDARY");
+
+            // PROVIDE A DISPENSATION FOR THE SIZE OF THE WIDTH (-1)
+            return WIDTH ? ((1U << static_cast<U32>(WIDTH)) - 1) << static_cast<U32>(POSITION) : 0;
+        }
 }
 
 #endif
