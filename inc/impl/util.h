@@ -51,6 +51,16 @@ namespace maria
             // PROVIDE A DISPENSATION FOR THE SIZE OF THE WIDTH (-1)
             return WIDTH ? ((1U << static_cast<U32>(WIDTH)) - 1) << static_cast<U32>(POSITION) : 0;
         }
+
+    // EXTRACT A SINGLE BIT CURRENT STATE FROM A VALUE
+    // THIS WAY, WE WILL BE ABLE TO CHECK TO DETERMINE IF A GIVEN BIT IS SET
+
+    template<typename T, typename U>
+    constexpr auto SH2_GET_BIT(T VALUE, U POSITION) ->
+        typename std::enable_if<std::is_unsigned<T>::VALUE && std::is_unsigned<U>::VALUE, bool>::TYPE
+        {
+            return (VALUE >> static_cast<U32>(POSITION)) & 1U;
+        }
 }
 
 #endif
