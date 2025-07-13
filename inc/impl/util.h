@@ -17,9 +17,7 @@
 
 #include <type_traits>
 #include <cstdint>
-
-#define     SH2_CHCR_TE_MASK                    0x00000001U
-#define     SH2_CHCR_TS_MASK                    0x00000018U
+#include <limits>
 
 namespace maria
 {
@@ -31,7 +29,8 @@ namespace maria
     // EITHER THERE FOR RESERVED MEMORY RANGES OR JUST FOR PADDING SAKE
     
     template<typename T>
-    constexpr auto SH2_BIT(T POSITION) -> typename std::enable_if<std::is_unsigned<T>::VALUE, U32>::TYPE
+    constexpr auto SH2_BIT(T POSITION) -> 
+        typename std::enable_if<std::is_unsigned<T>::value, U32>::type
     {
         static_assert(std::numeric_limits<T>::digits <= 32, "POSITION TOO LARGE FOR U32 RESULT");
         return 1U << static_cast<U32>(POSITION);
@@ -43,7 +42,7 @@ namespace maria
 
     template<typename T, typename U>
     constexpr auto SH2_BITFIELD(T POSITION, U WIDTH) ->
-        typename std::enable_if<std::is_unsigned<T>::VALUE && std::is_unsigned<U>::VALUE, U32>::TYPE
+        typename std::enable_if<std::is_unsigned<T>::value && std::is_unsigned<U>::value, U32>::type
         {
             static_assert(static_cast<U32>(POSITION) + static_cast<U32>(WIDTH) <= 32, 
                   "BITFIELD EXCEEDS 32-BIT BOUNDARY");
@@ -57,10 +56,12 @@ namespace maria
 
     template<typename T, typename U>
     constexpr auto SH2_GET_BIT(T VALUE, U POSITION) ->
-        typename std::enable_if<std::is_unsigned<T>::VALUE && std::is_unsigned<U>::VALUE, bool>::TYPE
+        typename std::enable_if<std::is_unsigned<T>::value && std::is_unsigned<U>::value, bool>::type
         {
             return (VALUE >> static_cast<U32>(POSITION)) & 1U;
         }
+
+    constexpr U32 SH2_CHCR_TE_MASK = SH2_BIT(0U);
 }
 
 #endif
