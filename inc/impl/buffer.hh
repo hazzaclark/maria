@@ -28,5 +28,13 @@ namespace maria
             BUFFER(const BUFFER&) = delete;
             BUFFER(BUFFER&& BUFFER_MOVE) noexcept;
             BUFFER& operator=(const BUFFER&) = delete;
+
+        // MEMBERS TO HELP WITH CONSTRUCTING METHODS
+
+        private:
+            U8* _BUFFER = nullptr;              // BASE MEMORY BUFFER
+            U8* _CURSOR = nullptr;              // THE CURRRENT POSITION IN THE BUFFER BEING READ
+            UNK _CAPACITY;                      
+            bool _MANAGE = false;               // IS THE CURRENT BUFFER HANDLING MEMORY
     };
 }
