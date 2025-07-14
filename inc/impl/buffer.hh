@@ -15,6 +15,7 @@
 #include <common.h>
 #include <dmac.hh>
 #include <reg.hh>
+#include <util.hh>
 
 namespace maria
 {
@@ -42,6 +43,24 @@ namespace maria
             {
                 std::memcpy(_CURSOR, &VALUE, sizeof(T));
                 _CURSOR += sizeof(T);
+            }
+
+            // NOW WE CAN DO THIS FOR ANY SORT OF ARBITARY SIZE OF THE OPERAND
+            // PRESUPPOSE ANY AND ALL CONDITION FOR THE INSTRUCTION SIZE
+
+            static void SH2_EMIT_WORD(U32 VALUE) noexcept
+            {
+                SH2_EMIT(static_cast<U16>(VALUE));
+            }
+
+            #undef SH2_USE_OPTS
+            static void SH2_EMIT_LONG(U32 VALUE) noexcept
+            {
+                #if SH2_USE_STATIC_CAST
+                SH2_EMIT(static_cast<U32>(VALUE));
+                #endif
+
+                SH2_EMIT(VALUE);
             }
 
 
