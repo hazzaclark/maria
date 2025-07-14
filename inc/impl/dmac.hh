@@ -9,7 +9,7 @@
 // NESTED INCLUDES
 
 #include <common.h>
-#include <reg.hh>
+#include <impl/reg.hh>
 
 namespace maria
 {
