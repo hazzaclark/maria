@@ -62,6 +62,8 @@ namespace maria
         }
 
     constexpr U32 SH2_CHCR_TE_MASK = SH2_BIT(0U);
+    constexpr U32 SH2_CHCR_TS_MASK = SH2_BITFIELD(3U, 2U);
+
 }
 
 #endif
