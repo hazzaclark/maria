@@ -30,6 +30,21 @@ namespace maria
             BUFFER(BUFFER&& BUFFER_MOVE) noexcept;
             BUFFER& operator=(const BUFFER&) = delete;
 
+            ~BUFFER() noexcept;
+
+
+            // EMIT ANY ARBITRARY VALUE GIVEN INTO THE MEMORY BUFFER
+            // THIS IS THE MAIN ENCOMPASSING FUNCTION BEHIND EVERYTHING
+            // BEING ABLE TO COPY THE CURRENT CURSOR POSSITION INTO SAID BUFFER
+
+            template <typename T>
+            static void SH2_EMIT(T VALUE) noexcept
+            {
+                std::memcpy(_CURSOR, &VALUE, sizeof(T));
+                _CURSOR += sizeof(T);
+            }
+
+
         // MEMBERS TO HELP WITH CONSTRUCTING METHODS
 
         private:
