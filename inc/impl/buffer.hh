@@ -58,6 +58,11 @@ namespace maria
                 SH2_EMIT(VALUE);
             }
 
+            void SH2_WRITEABLE(void);
+            void SH2_READONLY(void);
+            void SH2_STACK_GROW(UNK _CAPACITY);
+            bool SH2_MANAGED() const noexcept { return _MANAGE; }
+
 
         // MEMBERS TO HELP WITH CONSTRUCTING METHODS
 
