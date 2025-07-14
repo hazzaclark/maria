@@ -11,6 +11,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_executable(maria
     "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cc"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/buffer.cc"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/emitter.cc"
 )
 
 target_include_directories(maria PUBLIC
