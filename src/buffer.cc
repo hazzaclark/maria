@@ -31,4 +31,13 @@ namespace maria
             _BUFFER = new U8[CAPACITY]();
             _CURSOR = _BUFFER; 
         }
+
+    
+    // NOW WE WILL ACTUALLY CREATE A CONSTRUCTOR
+    // THAT ENCOMPASSES THE MAIN BUFFER
+    BUFFER::BUFFER(U8* BUFFER, UNK CAPACITY)
+        : _BUFFER{BUFFER}, _CURSOR{BUFFER}, _CAPACITY{CAPACITY}
+        {
+            assert(BUFFER != nullptr);
+        }
 }
