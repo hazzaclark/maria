@@ -19,6 +19,18 @@
 #include <cstdint>
 #include <limits>
 
+#if defined(SH2_USE_OPTS)
+#define SH2_USE_OPTS
+#else
+#define SH2_USE_OPTS
+
+#define         SH2_OPT_OFF         0
+#define         SH2_OPT_ON          1
+
+#define         SH2_USE_STATIC_CAST         SH2_OPT_OFF
+
+#endif
+
 namespace maria
 {
     // GENERATE A BIT MASK WITH A SPECIFIED BIT SET 
