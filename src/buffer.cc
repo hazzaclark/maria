@@ -14,8 +14,12 @@
 
 // SYSTEM INCLUDES
 
+#include <algorithm>
 #include <cstring>
+#include <cassert>
+#include <memory>
 #include <utility>
+#include <vector>
 
 namespace maria
 {
@@ -78,17 +82,24 @@ namespace maria
         // ANY AND ALL INFO WE ENCOUNTER, ADD TO THE BUFFER
         // AND SCALE UP BASED ON THE NEW CAPACITY
 
-        U8* SH2_NEW_BUFFER = static_cast<U8*>(new U8(NEW_CAPACITY));
+        auto SH2_NEW_BUFFER = std::make_unique<U8[]>(NEW_CAPACITY);
+
+        // CURRENT SIZE FOR CURSOR POSTION RELATED TO BUFFER
+        UNK CURRENT_SIZE = _CURSOR - _BUFFER;
 
         // COPY OLD DATA INTO THE NEW IF IT EXISTS
 
-        if(_BUFFER != nullptr)
+        if(_BUFFER && CURRENT_SIZE > 0)
         {
-            std::memcpy(SH2_NEW_BUFFER, _BUFFER, _CAPACITY);
-            delete _BUFFER;
+            std::copy(_BUFFER, _BUFFER + CURRENT_SIZE, SH2_NEW_BUFFER.get());
         }
 
-        _BUFFER = SH2_NEW_BUFFER;
+        if(_MANAGE && _BUFFER) delete[] _BUFFER;
+
+        // UPDATE THE CORRESPONDENCE FOR THE BUFFER AND RELEVANT CAPACITY
+        _BUFFER = SH2_NEW_BUFFER.release();
+        _CURSOR = _BUFFER + CURRENT_SIZE;
         _CAPACITY = NEW_CAPACITY;
+        _MANAGE = true;
     }
 }
