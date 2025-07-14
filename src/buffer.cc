@@ -53,4 +53,42 @@ namespace maria
         , _CURSOR{std::exchange(BUFFER_MOVE._CURSOR, nullptr)}
         , _CAPACITY{std::exchange(BUFFER_MOVE._CAPACITY, UNK{0})}
         , _MANAGE{std::exchange(BUFFER_MOVE._MANAGE, false)} {}
+
+
+    BUFFER::~BUFFER() noexcept
+    {
+        if(!_MANAGE) { return; }
+
+        delete[] _BUFFER;
+    }
+
+    // DYNAMICALLY ASSERT THE SIZE OF THE MANAGED MEMORY BUFFER AT THE CURRENT MOMENT
+    // THIS WAY, WE WILL BE ABLE TO SCALE THE BUFFER ACCORDINGLY TO FIT THE SIZE
+    // OF THE CONCURRENT OPERANDS AND ANY OTHER PRE-REQ'S
+
+    void BUFFER::SH2_STACK_GROW(UNK NEW_CAPACITY)
+    {
+        assert(SH2_MANAGED());
+
+        // SHOULD WE EVER ENCOUNTER A NOP, DO NOTHING
+        // THAT WAY, THE STACK WILL BE STILL SCALE WITHOUT INTERFERENCE
+
+        if(NEW_CAPACITY <= _CAPACITY) return;
+
+        // ANY AND ALL INFO WE ENCOUNTER, ADD TO THE BUFFER
+        // AND SCALE UP BASED ON THE NEW CAPACITY
+
+        U8* SH2_NEW_BUFFER = static_cast<U8*>(new U8(NEW_CAPACITY));
+
+        // COPY OLD DATA INTO THE NEW IF IT EXISTS
+
+        if(_BUFFER != nullptr)
+        {
+            std::memcpy(SH2_NEW_BUFFER, _BUFFER, _CAPACITY);
+            delete _BUFFER;
+        }
+
+        _BUFFER = SH2_NEW_BUFFER;
+        _CAPACITY = NEW_CAPACITY;
+    }
 }
