@@ -13,9 +13,13 @@
 // NESTED INCLUDES
 
 #include <common.h>
-#include <dmac.hh>
-#include <reg.hh>
-#include <util.hh>
+#include <impl/dmac.hh>
+#include <impl/reg.hh>
+#include <impl/util.hh>
+
+// SYSTEM INCLUDES
+
+#include <cstring>
 
 namespace maria
 {
@@ -39,7 +43,7 @@ namespace maria
             // BEING ABLE TO COPY THE CURRENT CURSOR POSSITION INTO SAID BUFFER
 
             template <typename T>
-            static void SH2_EMIT(T VALUE) noexcept
+            void SH2_EMIT(T VALUE) noexcept
             {
                 std::memcpy(_CURSOR, &VALUE, sizeof(T));
                 _CURSOR += sizeof(T);
@@ -48,12 +52,12 @@ namespace maria
             // NOW WE CAN DO THIS FOR ANY SORT OF ARBITARY SIZE OF THE OPERAND
             // PRESUPPOSE ANY AND ALL CONDITION FOR THE INSTRUCTION SIZE
 
-            static void SH2_EMIT_WORD(U32 VALUE) noexcept
+            void SH2_EMIT_WORD(U32 VALUE) noexcept
             {
                 SH2_EMIT(static_cast<U16>(VALUE));
             }
 
-            static void SH2_EMIT_LONG(U32 VALUE) noexcept
+            void SH2_EMIT_LONG(U32 VALUE) noexcept
             {
                 SH2_EMIT(VALUE);
             }
