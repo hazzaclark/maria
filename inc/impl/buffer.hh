@@ -53,13 +53,8 @@ namespace maria
                 SH2_EMIT(static_cast<U16>(VALUE));
             }
 
-            #undef SH2_USE_OPTS
             static void SH2_EMIT_LONG(U32 VALUE) noexcept
             {
-                #if SH2_USE_STATIC_CAST
-                SH2_EMIT(static_cast<U32>(VALUE));
-                #endif
-
                 SH2_EMIT(VALUE);
             }
 
