@@ -37,6 +37,8 @@ namespace maria
 
             ~BUFFER() noexcept;
 
+            UNK SH2_GET_CAPACITY() const { return _CAPACITY; }
+            U8* SH2_GET_BUFFER() const { return _BUFFER; }
 
             // EMIT ANY ARBITRARY VALUE GIVEN INTO THE MEMORY BUFFER
             // THIS IS THE MAIN ENCOMPASSING FUNCTION BEHIND EVERYTHING
