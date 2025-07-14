@@ -6,8 +6,8 @@
 
 #pragma once
 
-#ifndef SH2_UTIL_H
-#define SH2_UTIL_H
+#ifndef SH2_UTIL_HH
+#define SH2_UTIL_HH
 
 // NESTED INCLUDES
 
