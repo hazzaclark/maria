@@ -27,8 +27,6 @@
 #define         SH2_OPT_OFF         0
 #define         SH2_OPT_ON          1
 
-#define         SH2_USE_STATIC_CAST         SH2_OPT_OFF
-
 #endif
 
 namespace maria
@@ -56,9 +54,6 @@ namespace maria
     constexpr auto SH2_BITFIELD(T POSITION, U WIDTH) ->
         typename std::enable_if<std::is_unsigned<T>::value && std::is_unsigned<U>::value, U32>::type
         {
-            static_assert(static_cast<U32>(POSITION) + static_cast<U32>(WIDTH) <= 32, 
-                  "BITFIELD EXCEEDS 32-BIT BOUNDARY");
-
             // PROVIDE A DISPENSATION FOR THE SIZE OF THE WIDTH (-1)
             return WIDTH ? ((1U << static_cast<U32>(WIDTH)) - 1) << static_cast<U32>(POSITION) : 0;
         }
