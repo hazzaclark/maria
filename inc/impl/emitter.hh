@@ -36,6 +36,7 @@ namespace maria
             BUFFER& GET_BUFFER(void) noexcept;
 
             void SH2_ADD(GP_REGISTER RD, GP_REGISTER RS) noexcept;
+            void SH2_ADDI(U32 IMM, GP_REGISTER RD) noexcept;
 
         private:
             BUFFER _BUFFER;
@@ -50,13 +51,13 @@ namespace maria
 
         protected:
             inline void SH2_EMIT_R_TYPE(BUFFER& BUFFER, GP_REGISTER RN, 
-                                GP_REGISTER RM, U16 MASK, U16 BITMASK)
+                                GP_REGISTER RM, U16 MASK)
             {
-                const U16 OPCODE = MASK |
+                const auto OPCODE = MASK |
                                     (RN.GET_INDEX() << 8) |
-                                    (RM.GET_INDEX() << 4) |
-                                    (BITMASK & 0xF);
-                BUFFER.SH2_EMIT(OPCODE);
+                                    (RM.GET_INDEX() << 4);
+                                    
+                BUFFER.SH2_EMIT_WORD(OPCODE);
             }
 
             inline void SH2_EMIT_IMM_TYPE(BUFFER& BUFFER, GP_REGISTER RN, 
@@ -66,7 +67,7 @@ namespace maria
                                     (RN.GET_INDEX() << 8) | 
                                     (IMM & 0xFF);
 
-                BUFFER.SH2_EMIT(OPCODE);
+                BUFFER.SH2_EMIT_WORD(OPCODE);
             }
     };
 }
