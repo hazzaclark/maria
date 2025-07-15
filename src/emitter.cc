@@ -17,14 +17,20 @@
 namespace maria 
 {
     EMITTER::EMITTER(UNK CAPACITY) : _BUFFER(CAPACITY) {}
-
     EMITTER::~EMITTER() = default;
-
     BUFFER& EMITTER::GET_BUFFER() noexcept { return _BUFFER; }
-    
+
+    ////////////////////////////////////////////
+    //       HITACHI SUPERH2 INSTRUCTIONS
+    ////////////////////////////////////////////
+
     void EMITTER::SH2_ADD(GP_REGISTER RD, GP_REGISTER RS) noexcept
     {
-        U16 OPCODE = 0x300C | (RD.GET_INDEX() << 8) | (RS.GET_INDEX() << 4);
-        _BUFFER.SH2_EMIT_WORD(OPCODE);
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, RD, RS, 0b011000000001100);
+    }
+
+    void EMITTER::SH2_ADDI(U32 IMM, GP_REGISTER RD) noexcept
+    {
+        EMITTER::SH2_EMIT_IMM_TYPE(_BUFFER, RD, IMM, 0b0111000000000000);
     }
 }
