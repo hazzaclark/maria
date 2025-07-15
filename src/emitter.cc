@@ -24,13 +24,20 @@ namespace maria
     //       HITACHI SUPERH2 INSTRUCTIONS
     ////////////////////////////////////////////
 
-    void EMITTER::SH2_ADD(GP_REGISTER RD, GP_REGISTER RS) noexcept
+    // OPCODE MASKS:https://www.farnell.com/datasheets/60581.pdf#page=75
+
+    void EMITTER::SH2_ADD(GP_REGISTER RM, GP_REGISTER RN) noexcept
     {
-        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, RD, RS, 0b011000000001100);
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, RM, RN, 0b011000000001100);
     }
 
-    void EMITTER::SH2_ADDI(U32 IMM, GP_REGISTER RD) noexcept
+    void EMITTER::SH2_ADDI(U32 IMM, GP_REGISTER RN) noexcept
     {
-        EMITTER::SH2_EMIT_IMM_TYPE(_BUFFER, RD, IMM, 0b0111000000000000);
+        EMITTER::SH2_EMIT_IMM_TYPE(_BUFFER, RN, IMM, 0b0111000000000000);
+    }
+
+    void EMITTER::SH2_ADDC(GP_REGISTER RM, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, RM, RN, 0b011000000001110);
     }
 }
