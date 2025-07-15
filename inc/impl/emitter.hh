@@ -20,7 +20,6 @@ namespace maria
     class EMITTER
     {
         public: 
-
             // INITIALISE ALL OF THE REQUIRED CONSTRUCTORS NECESSARY FOR THE EMITTER
             // THE MAIN ENCOMPASSING ONE WILL BE TO DETERMINE HOW MANY BYTES ARE CURRENTLY
             // HELD IN THE CODE BUFFER
@@ -31,18 +30,43 @@ namespace maria
             EMITTER(const EMITTER&) = delete;
             EMITTER(EMITTER&&) = default;
 
-            ~EMITTER() noexcept;
+            ~EMITTER(void) noexcept;
 
             // ACCESS THE ENCOMPASSING CODE BUFFER THAT IS CURRENTLY BEING MANAGED
             BUFFER& GET_BUFFER(void) noexcept;
-
-            // GET THE PREV OPCODE THAT WAS ACCESSED BEFORE EMITTED (FOR TESTING)
-            U16 GET_PREV_OPCODE(void) const noexcept;
 
             void SH2_ADD(GP_REGISTER RD, GP_REGISTER RS) noexcept;
 
         private:
             BUFFER _BUFFER;
-            U16 PREV_OPCODE;
+
+        // PROTECTED FIELDS FOR ACCESSING VARIOUS OPCODE TYPES
+        // EACH OF THE DEFINITIONS WILL PRESUPPOSE A FEW CONDITIONS
+
+        // BUFFER: THE CURRENT MEMORY BUFFER BEING ACCESSED 
+        // RN/RM: THE REGISTERS BEING READ
+        // MASK: THE OPCODE MASK
+        // BITMASK: THE BITMASK MATCH TO ACCESS SAID OPCODE 
+
+        protected:
+            inline void SH2_EMIT_R_TYPE(BUFFER& BUFFER, GP_REGISTER RN, 
+                                GP_REGISTER RM, U16 MASK, U16 BITMASK)
+            {
+                const U16 OPCODE = MASK |
+                                    (RN.GET_INDEX() << 8) |
+                                    (RM.GET_INDEX() << 4) |
+                                    (BITMASK & 0xF);
+                BUFFER.SH2_EMIT(OPCODE);
+            }
+
+            inline void SH2_EMIT_IMM_TYPE(BUFFER& BUFFER, GP_REGISTER RN, 
+                                                        U8 IMM, U16 MASK)
+            {
+                const U16 OPCODE = MASK |
+                                    (RN.GET_INDEX() << 8) | 
+                                    (IMM & 0xFF);
+
+                BUFFER.SH2_EMIT(OPCODE);
+            }
     };
 }
