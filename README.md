@@ -37,6 +37,38 @@ int main(void)
 }
 ```
 
+## Emit Opcode Mask from definition:
+
+The most nuanced and intrinsic feature related to this Emitter is the means of being able to access the Mask associated with the combination of Directives.
+
+This is presupposed on the basis of that the definition for the Opcode already has the Mask associated with that type of Opcode Family
+
+Through the usage of the Memory Buffer, we are able to dynamically cast the relevant size of the current Opcode being accessed and figure out the penultimate result of the operation
+
+```cpp
+using namespace maria;
+
+int main(void)
+{
+    EMITTER EMITTER;
+    GP_REGISTER R1(1);
+    GP_REGISTER R2(2);
+    
+    EMITTER.SH2_ADD(R1, R2);
+    
+    BUFFER& BUFFER = EMITTER.GET_BUFFER();
+    U16 OPCODE = *reinterpret_cast<U16*>(BUFFER.SH2_GET_BUFFER());
+    
+    printf("EMITTED OPCODE MASK FROM: (ADD R1, R2) 0x%04X\n", OPCODE);
+    return 0;
+}
+```
+`````
+.\maria.exe
+EMITTED OPCODE MASK FROM: (ADD R1, R2) 0x312C
+`````
+
+
 # Building:
 
 To build this project, you will need a C++ compiler which supports CMake 3.20. From there, it is just a case of:
