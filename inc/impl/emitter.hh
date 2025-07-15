@@ -20,11 +20,25 @@ namespace maria
     class EMITTER
     {
         public: 
-            [[nodiscard]] explicit EMITTER(UNK CAPACITY = BUFFER::SH2_DEFAULT_BUFFER);
+
+            // INITIALISE ALL OF THE REQUIRED CONSTRUCTORS NECESSARY FOR THE EMITTER
+            // THE MAIN ENCOMPASSING ONE WILL BE TO DETERMINE HOW MANY BYTES ARE CURRENTLY
+            // HELD IN THE CODE BUFFER
+
+            explicit EMITTER(UNK CAPACITY = BUFFER::SH2_DEFAULT_BUFFER);
             
+            // THE REST OF THESE ENCOMPASS COPY AND MOVE ASSIGNMENTS RESPECTIVELY
             EMITTER(const EMITTER&) = delete;
             EMITTER(EMITTER&&) = default;
 
             ~EMITTER() noexcept;
+
+            // ACCESS THE ENCOMPASSING CODE BUFFER THAT IS CURRENTLY BEING MANAGED
+            BUFFER& GET_BUFFER(void) noexcept;
+
+            void SH2_ADD(GP_REGISTER RD, GP_REGISTER RS) noexcept;
+
+        private:
+            BUFFER _BUFFER;
     };
 }
