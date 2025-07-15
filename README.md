@@ -84,3 +84,5 @@ cmake ..
 [SH2 PROGRAMMER MANUAL](https://antime.kapsi.fi/sega/files/h12p0.pdf)
 
 [SH2 REGISTERS](https://bitsavers.trailing-edge.com/components/hitachi/superH/1995_SH1_SH2_Programming_Manual_3rd_Edition.pdf)
+
+[SH2 OPCODE MASKS](https://www.farnell.com/datasheets/60581.pdf#page=75)
