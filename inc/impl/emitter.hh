@@ -36,9 +36,13 @@ namespace maria
             // ACCESS THE ENCOMPASSING CODE BUFFER THAT IS CURRENTLY BEING MANAGED
             BUFFER& GET_BUFFER(void) noexcept;
 
+            // GET THE PREV OPCODE THAT WAS ACCESSED BEFORE EMITTED (FOR TESTING)
+            U16 GET_PREV_OPCODE(void) const noexcept;
+
             void SH2_ADD(GP_REGISTER RD, GP_REGISTER RS) noexcept;
 
         private:
             BUFFER _BUFFER;
+            U16 PREV_OPCODE;
     };
 }
