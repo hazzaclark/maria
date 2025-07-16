@@ -15,9 +15,9 @@
 
 // SYSTEM INCLUDES
 
-#include <type_traits>
 #include <cstdint>
 #include <limits>
+#include <type_traits>
 
 #if defined(SH2_USE_OPTS)
 #define SH2_USE_OPTS
@@ -71,6 +71,16 @@ namespace maria
     constexpr U32 SH2_CHCR_TE_MASK = SH2_BIT(0U);
     constexpr U32 SH2_CHCR_TS_MASK = SH2_BITFIELD(3U, 2U);
 
+
+
+    // EXTRAPOLATE THE BYTE OFFSET FOR AN ARBITRARY BRANCH DISPLACEMENT
+    // SH2 DEFAULS TO 12 BIT SIGNED WORD OFFSETS SO WE CAN EMULATE THIS SIMPLY
+
+    [[nodiscard]] constexpr U16 SH2_BRANCH_IMM(U32 IMM)
+    {
+        const U16 DISP = (IMM >> 1) & 0xFFF;
+        return DISP;
+    }
 }
 
 #endif
