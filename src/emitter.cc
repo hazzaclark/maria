@@ -40,4 +40,9 @@ namespace maria
     {
         EMITTER::SH2_EMIT_R_TYPE(_BUFFER, RM, RN, 0b011000000001110);
     }
+
+    void EMITTER::SH2_ADDV(GP_REGISTER RM, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, RM, RN, 0b011000000001111);
+    }
 }
