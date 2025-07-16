@@ -39,6 +39,7 @@ namespace maria
             void SH2_ADDI(U32 IMM, GP_REGISTER RN) noexcept;
             void SH2_ADDC(GP_REGISTER RM, GP_REGISTER RN) noexcept;
             void SH2_ADDV(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_BRA(U32 DISP) noexcept;
             void SH2_CMP_EQ_IMM(U32 IMM, GP_REGISTER RN) noexcept;
             void SH2_CMP_EQ(GP_REGISTER RM, GP_REGISTER RN) noexcept;
             void SH2_CMP_HS(GP_REGISTER RM, GP_REGISTER RN) noexcept;
@@ -102,7 +103,7 @@ namespace maria
             }
             
             // MANUALLY BIT SHIFT TO ACCOMMODATE FOR THE IMM BRANCH VALUE
-            inline void SH2_EMIT_B_TYPE(BUFFER& BUFFER, U32 IMM, GP_REGISTER RM, GP_REGISTER RN, U32 CALL, U32 OPCODE)
+            inline void SH2_EMIT_B_TYPE(BUFFER& BUFFER, U32 IMM, U32 OPCODE)
             {
                 BUFFER.SH2_EMIT_WORD(OPCODE | SH2_BRANCH_IMM(IMM));
             }
