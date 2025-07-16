@@ -35,8 +35,39 @@ namespace maria
             // ACCESS THE ENCOMPASSING CODE BUFFER THAT IS CURRENTLY BEING MANAGED
             BUFFER& GET_BUFFER(void) noexcept;
 
-            void SH2_ADD(GP_REGISTER RD, GP_REGISTER RS) noexcept;
-            void SH2_ADDI(U32 IMM, GP_REGISTER RD) noexcept;
+            void SH2_ADD(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_ADDI(U32 IMM, GP_REGISTER RN) noexcept;
+            void SH2_ADDC(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_ADDV(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_CMP_EQ_IMM(U32 IMM, GP_REGISTER RN) noexcept;
+            void SH2_CMP_EQ(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_CMP_HS(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_CMP_GE(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_CMP_HI(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_CMP_GT(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_CMP_PL(GP_REGISTER RN) noexcept;
+            void SH2_CMP_PZ(GP_REGISTER RN) noexcept;
+            void SH2_CMP_STR(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_DIV1(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_DIV0S(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_DMULS_LONG(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_DMULU_LONG(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_DT(GP_REGISTER RN) noexcept;
+            void SH2_EXTS_BYTE(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_EXTS_WORD(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_EXTS_LONG(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_EXTU_BYTE(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_EXTU_WORD(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_MAC_LONG(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_MAC_WORD(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_MUL_LONG(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_MULS_WORD(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_MULU_WORD(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_NEG(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_NEGC(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_SUB(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_SUBC(GP_REGISTER RM, GP_REGISTER RN) noexcept;
+            void SH2_SUBV(GP_REGISTER RM, GP_REGISTER RN) noexcept;
 
         private:
             BUFFER _BUFFER;
@@ -56,7 +87,7 @@ namespace maria
                 const auto OPCODE = MASK |
                                     (RN.GET_INDEX() << 8) |
                                     (RM.GET_INDEX() << 4);
-                                    
+
                 BUFFER.SH2_EMIT_WORD(OPCODE);
             }
 
