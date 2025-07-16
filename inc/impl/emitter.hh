@@ -100,5 +100,11 @@ namespace maria
 
                 BUFFER.SH2_EMIT_WORD(OPCODE);
             }
+            
+            // MANUALLY BIT SHIFT TO ACCOMMODATE FOR THE IMM BRANCH VALUE
+            inline void SH2_EMIT_B_TYPE(BUFFER& BUFFER, U32 IMM, GP_REGISTER RM, GP_REGISTER RN, U32 CALL, U32 OPCODE)
+            {
+                BUFFER.SH2_EMIT_WORD(OPCODE | SH2_BRANCH_IMM(IMM));
+            }
     };
 }
