@@ -25,6 +25,8 @@ namespace maria
     ////////////////////////////////////////////
 
     // OPCODE MASKS:https://www.farnell.com/datasheets/60581.pdf#page=75
+    // FOR ANY OF THE MASKS THAT START WITH A 1, THEY CANNOT BE 
+    // TRUNCATED WITH THE "0b" NOTATION - OPT TO USE HEX VALUE INSTEAD
 
     void EMITTER::SH2_ADD(GP_REGISTER RM, GP_REGISTER RN) noexcept
     {
@@ -49,5 +51,25 @@ namespace maria
     void EMITTER::SH2_CMP_EQ_IMM(U32 IMM, GP_REGISTER RN) noexcept
     {
         EMITTER::SH2_EMIT_IMM_TYPE(_BUFFER, RN, IMM, 0x8029);
+    }
+
+    void EMITTER::SH2_CMP_EQ(GP_REGISTER RM, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, RM, RN, 0b011000000000000);
+    }
+
+    void EMITTER::SH2_CMP_HS(GP_REGISTER RM, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, RM, RN, 0b011000000000010);
+    }
+
+    void EMITTER::SH2_CMP_GE(GP_REGISTER RM, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, RM, RN, 0b011000000000011);
+    }
+
+    void EMITTER::SH2_CMP_HI(GP_REGISTER RM, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, RM, RN, 0b011000000000110);
     }
 }
