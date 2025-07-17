@@ -1,31 +1,40 @@
 // COPYRIGHT (C) HARRY CLARK 2025
 // LIGHTWEIGHT CODE EMITTER/GENERATOR FOR THE HITACHI SUPERH2
 
-// NESTED INCLUDES
+// THE FOLLOWING FILE PERTAINS TOWARDS THE MAIN FUNCTIONALITY OF THE PROGRAM
+// USE THIS FILE MORE SO AS A TESTING SUITE SHOULD IT BE APPLICABLE TO YOU
 
-#include <common.h>
+// EMITTER AND BUFFER OBJECTS ARE PROVIDED, IT IS JUST A CASE OF TESTING THE
+// WATERS TO DETERMINE IF THE CORRECT INFORMATION IS EMITTED AS PER EACH OPCODE DEF
+
+#include <impl/emitter.hh>
 #include <impl/reg.hh>
-
-// SYSTEM INCLUDES
-
 #include <cstdio>
 
 using namespace maria;
 
 int main(void)
 {
-    std::printf("HARRY CLARK - SH2 EMITTER\n");
+    EMITTER EMITTER;
+    GP_REGISTER R0(0);
+    GP_REGISTER R1(1);
+    GP_REGISTER R2(2);
 
-    std::printf("R0 VALUE: %d\n", maria::SH2_REGISTERS::R0.GET_INDEX());
+    MACH MACH;
+    
+    EMITTER.SH2_ADD(R0, R0);
+    EMITTER.SH2_BRA(-4);
+    EMITTER.SH2_BSR(10);
 
-    maria::PC SH2_PC;
-    std::printf("PC VALUE: %d\n", SH2_PC.GET_INDEX());
+    EMITTER.SH2_STS_MACH(MACH, R2);
+    
+    BUFFER& BUFFER = EMITTER.GET_BUFFER();
+    U16* CODE_PTR = reinterpret_cast<U16*>(BUFFER.SH2_GET_BUFFER());
 
-    maria::PC SH2_SP;
-    std::printf("SP VALUE: %d\n", SH2_SP.GET_INDEX());
-
-    maria::SR SH2_SR;
-    std::printf("SR VALUE: %d\n", SH2_SR.GET_INDEX());
-        
+    printf("EMITTED OPCODE MASK FROM: (ADD R0, R0) -> 0x%04X\n", CODE_PTR[0]);
+    printf("EMITTED OPCODE MASK FROM: (BRA -4) -> 0x%04X\n", CODE_PTR[1]);
+    printf("EMITTED OPCODE MASK FROM: (BSR 10) -> 0x%04X\n", CODE_PTR[2]);
+    printf("EMITTED OPCODE MASK FROM: (MACH R2) -> 0x%04X\n", CODE_PTR[3]);
+    
     return 0;
 }
