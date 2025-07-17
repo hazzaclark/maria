@@ -155,8 +155,9 @@ namespace maria
         // BITMASK: THE BITMASK MATCH TO ACCESS SAID OPCODE 
 
         protected:
-            inline void SH2_EMIT_R_TYPE(BUFFER& BUFFER, GP_REGISTER RN, 
-                                GP_REGISTER RM, U16 MASK)
+            template<typename REG_A, typename REG_B = REG_A>
+            inline void SH2_EMIT_R_TYPE(BUFFER& BUFFER, REG_A RN, 
+                                REG_B RM, U16 MASK)
             {
                 const auto OPCODE = MASK |
                                     (RN.GET_INDEX() << 8) |
@@ -168,7 +169,8 @@ namespace maria
             // NOW WE ACCESS A REGISTER ON IT'S OWN
             // FOR OPERATIONS THAT ONLY REQUIRE ONE OPERAND
 
-            inline void SH2_EMIT_SINGLE_R_TYPE(BUFFER& BUFFER, GP_REGISTER RM, U16 MASK)
+            template<typename REG_A>
+            inline void SH2_EMIT_SINGLE_R_TYPE(BUFFER& BUFFER, REG_A RM, U16 MASK)
             {
                 const auto OPCODE = MASK | (RM.GET_INDEX() << 8);
                 BUFFER.SH2_EMIT_WORD(OPCODE);
