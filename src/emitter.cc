@@ -82,4 +82,269 @@ namespace maria
     {
         EMITTER::SH2_EMIT_R_TYPE(_BUFFER, RM, RN, 0b011000000000110);
     }
+
+    void EMITTER::SH2_CMP_GT(GP_REGISTER RM, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, RN, RM, 0b001100000000111);
+    }
+
+    void EMITTER::SH2_CMP_PL(GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_SINGLE_R_TYPE(_BUFFER, RN, 0b0100000000010101);
+    }
+
+    void EMITTER::SH2_CMP_PZ(GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_SINGLE_R_TYPE(_BUFFER, RN, 0b0100000000010001);
+    }
+
+    void EMITTER::SH2_CMP_STR(GP_REGISTER RM, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, RN, RM, 0b001000000001100);
+    }
+
+    void EMITTER::SH2_DIV1(GP_REGISTER RM, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, RN, RM, 0b001100000000100);
+    }
+
+    void EMITTER::SH2_DIV0S(GP_REGISTER RM, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, RN, RM, 0b001000000000111);
+    }
+
+    void EMITTER::SH2_DIV0U() noexcept
+    {
+        _BUFFER.SH2_EMIT_WORD(0x00000019);
+    }
+
+    void EMITTER::SH2_DMULS_LONG(GP_REGISTER RM, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, RN, RM, 0b001100000001101);
+    }
+
+    void EMITTER::SH2_DMULU_LONG(GP_REGISTER RM, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, RN, RM, 0b001100000000101);
+    }
+
+    void EMITTER::SH2_DT(GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_SINGLE_R_TYPE(_BUFFER, RN, 0b0100000000010000);
+    }
+
+    void EMITTER::SH2_ROTL(GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_SINGLE_R_TYPE(_BUFFER, RN, 0x4004);
+    }
+
+    void EMITTER::SH2_ROTR(GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_SINGLE_R_TYPE(_BUFFER, RN, 0x4005);
+    }
+
+    void EMITTER::SH2_ROTCL(GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_SINGLE_R_TYPE(_BUFFER, RN, 0x4024);
+    }
+
+    void EMITTER::SH2_ROTCR(GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_SINGLE_R_TYPE(_BUFFER, RN, 0x4025);
+    }
+
+    void EMITTER::SH2_SHAL(GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_SINGLE_R_TYPE(_BUFFER, RN, 0x4020);
+    }
+
+    void EMITTER::SH2_SHAR(GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_SINGLE_R_TYPE(_BUFFER, RN, 0x4021);
+    }
+
+    void EMITTER::SH2_SHLL(GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_SINGLE_R_TYPE(_BUFFER, RN, 0x4000);
+    }
+
+    void EMITTER::SH2_SHLL2(GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_SINGLE_R_TYPE(_BUFFER, RN, 0x4008);
+    }
+
+    void EMITTER::SH2_SHLL8(GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_SINGLE_R_TYPE(_BUFFER, RN, 0x4018);
+    }
+
+    void EMITTER::SH2_SHLL16(GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_SINGLE_R_TYPE(_BUFFER, RN, 0x4028);
+    }
+
+    void EMITTER::SH2_SHLR(GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_SINGLE_R_TYPE(_BUFFER, RN, 0x4001);
+    }
+
+    void EMITTER::SH2_SHLR2(GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_SINGLE_R_TYPE(_BUFFER, RN, 0x4009);
+    }
+
+    void EMITTER::SH2_SHLR8(GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_SINGLE_R_TYPE(_BUFFER, RN, 0x4019);
+    }
+
+    void EMITTER::SH2_SHLR16(GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_SINGLE_R_TYPE(_BUFFER, RN, 0x4029);
+    }
+
+    void EMITTER::SH2_LDC_SR(SR SR, GP_REGISTER RM) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, SR, RM, 0x400E);
+    }
+
+    void EMITTER::SH2_LDC_GBR(GBR GBR, GP_REGISTER RM) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, GBR, RM, 0x401E);
+    }
+
+    void EMITTER::SH2_LDC_VBR(VBR VBR, GP_REGISTER RM) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, VBR, RM, 0x402E);
+    }
+
+    void EMITTER::SH2_LDC_L_SR(SR SR, GP_REGISTER RM) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, SR, RM, 0x4007);
+    }
+
+    void EMITTER::SH2_LDC_L_GBR(GBR GBR, GP_REGISTER RM) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, GBR, RM, 0x4017);
+    }
+
+    void EMITTER::SH2_LDC_L_VBR(VBR VBR, GP_REGISTER RM) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, VBR, RM, 0x4027);
+    }
+
+    void EMITTER::SH2_LDS_MACH(MACH MACH, GP_REGISTER RM) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, MACH, RM, 0x400A);
+    }
+
+    void EMITTER::SH2_LDS_MACL(MACL MACL, GP_REGISTER RM) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, MACL, RM, 0x401A);
+    }
+
+    void EMITTER::SH2_LDS_PR(PR PR, GP_REGISTER RM) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, PR, RM, 0x402A);
+    }
+
+    void EMITTER::SH2_LDS_L_MACH(MACH MACH, GP_REGISTER RM) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, MACH, RM, 0x4006);
+    }
+
+    void EMITTER::SH2_LDS_L_MACL(MACL MACL, GP_REGISTER RM) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, MACL, RM, 0x4016);
+    }
+
+    void EMITTER::SH2_LDS_L_PR(PR PR, GP_REGISTER RM) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, PR, RM, 0x4026);
+    }
+
+    void EMITTER::SH2_NOP() noexcept
+    {
+        _BUFFER.SH2_EMIT_WORD(0x0009);
+    }
+
+    void EMITTER::SH2_RTE() noexcept
+    {
+        _BUFFER.SH2_EMIT_WORD(0x002B);
+    }
+
+    void EMITTER::SH2_SETT() noexcept
+    {
+        _BUFFER.SH2_EMIT_WORD(0x0018);
+    }
+
+    void EMITTER::SH2_SLEEP() noexcept
+    {
+        _BUFFER.SH2_EMIT_WORD(0x001B);
+    }
+
+    void EMITTER::SH2_STC_SR(SR SR, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, SR, RN, 0x0002);
+    }
+
+    void EMITTER::SH2_STC_GBR(GBR GBR, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, GBR, RN, 0x0012);
+    }
+
+    void EMITTER::SH2_STC_VBR(VBR VBR, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, VBR, RN, 0x0022);
+    }
+
+    void EMITTER::SH2_STC_L_SR(SR SR, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, SR, RN, 0x4003);
+    }
+
+    void EMITTER::SH2_STC_L_GBR(GBR GBR, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, GBR, RN, 0x4013);
+    }
+
+    void EMITTER::SH2_STC_L_VBR(VBR VBR, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, VBR, RN, 0x4023);
+    }
+
+    void EMITTER::SH2_STS_MACH(MACH MACH, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, MACH, RN, 0x000A);
+    }
+
+    void EMITTER::SH2_STS_MACL(MACL MACL, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, MACL, RN, 0x001A);
+    }
+
+    void EMITTER::SH2_STS_PR(PR PR, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, PR, RN, 0x002A);
+    }
+
+    void EMITTER::SH2_STS_L_MACH(MACH MACH, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, MACH, RN, 0x4002);
+    }
+
+    void EMITTER::SH2_STS_L_MACL(MACL MACL, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, MACL, RN, 0x4012);
+    }
+
+    void EMITTER::SH2_STS_L_PR(PR PR, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, PR, RN, 0x4022);
+    }
+
+    void EMITTER::SH2_TRAPA(U8 IMM) noexcept
+    {
+        _BUFFER.SH2_EMIT_WORD(0xC300 | (IMM & 0xFF));
+    }
 }
