@@ -40,6 +40,7 @@ namespace maria
             void SH2_ADDC(GP_REGISTER RM, GP_REGISTER RN) noexcept;
             void SH2_ADDV(GP_REGISTER RM, GP_REGISTER RN) noexcept;
             void SH2_BRA(U32 DISP) noexcept;
+            void SH2_BSR(U32 DISP) noexcept;
             void SH2_CMP_EQ_IMM(U32 IMM, GP_REGISTER RN) noexcept;
             void SH2_CMP_EQ(GP_REGISTER RM, GP_REGISTER RN) noexcept;
             void SH2_CMP_HS(GP_REGISTER RM, GP_REGISTER RN) noexcept;
@@ -89,6 +90,15 @@ namespace maria
                                     (RN.GET_INDEX() << 8) |
                                     (RM.GET_INDEX() << 4);
 
+                BUFFER.SH2_EMIT_WORD(OPCODE);
+            }
+
+            // NOW WE ACCESS A REGISTER ON IT'S OWN
+            // FOR OPERATIONS THAT ONLY REQUIRE ONE OPERAND
+
+            inline void SH2_EMIT_SINGLE_R_TYPE(BUFFER& BUFFER, GP_REGISTER RM, U16 MASK)
+            {
+                const auto OPCODE = MASK | (RM.GET_INDEX() << 8);
                 BUFFER.SH2_EMIT_WORD(OPCODE);
             }
 
