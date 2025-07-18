@@ -26,6 +26,7 @@ namespace maria
     class BUFFER
     {
         public:
+            static constexpr UNK SH2_MIN_BUFFER = 1024;
             static constexpr UNK SH2_DEFAULT_BUFFER = 4096;
 
             explicit BUFFER(UNK CAPACITY = SH2_DEFAULT_BUFFER);
@@ -64,11 +65,15 @@ namespace maria
                 SH2_EMIT(VALUE);
             }
 
+            void SH2_EXEC(void);
             void SH2_WRITEABLE(void);
             void SH2_READONLY(void);
             void SH2_STACK_GROW(UNK _CAPACITY);
             bool SH2_MANAGED() const noexcept { return _MANAGE; }
 
+            S32 SH2_CURSOR_OFFSET(void) const noexcept { return _CURSOR - _BUFFER; }
+            U32 SH2_GET_OFFSET_ADDR(S32 OFFSET) const noexcept { return reinterpret_cast<U32>(SH2_GET_OFFSET_PTR(OFFSET)); }
+            U8* SH2_GET_OFFSET_PTR(S32 OFFSET) const noexcept { return _BUFFER + OFFSET; }
 
         // MEMBERS TO HELP WITH CONSTRUCTING METHODS
 
