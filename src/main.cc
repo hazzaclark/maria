@@ -16,7 +16,6 @@ using namespace maria;
 int main(void)
 {
     EMITTER EMITTER;
-    BUFFER BUFFER;
     GP_REGISTER R0(0);
     GP_REGISTER R1(1);
     GP_REGISTER R2(2);
@@ -24,19 +23,18 @@ int main(void)
     MACH MACH;
     
     EMITTER.SH2_ADD(R0, R0);
-    EMITTER.SH2_BRA(-4);
-    EMITTER.SH2_BSR(10);
+    EMITTER.SH2_BRA(0);
+    EMITTER.SH2_BSR(0);
 
-    EMITTER.SH2_STS_MACH(MACH, R2);
+    EMITTER.SH2_STS_MACH(MACH, R0);
     
-    // CREATE AN INITIAL BUFFER CAST TO BE ABLE TO ACCESS THE CURRENT DATA
-    // THIS IS UPDATE TO BE ABLE TO ACCESS THE DATA THROUGH THE VECTOR (C++ STANDARD FUNCTIONS, MY BELOVED)
-    U16* CODE_PTR = reinterpret_cast<U16*>(const_cast<U8*>(BUFFER.SH2_GET_BUFFER().data()));
+    BUFFER& BUFFER = EMITTER.GET_BUFFER();
+    U16* CODE_PTR = reinterpret_cast<U16*>(BUFFER.SH2_GET_BUFFER());
 
     printf("EMITTED OPCODE MASK FROM: (ADD R0, R0) -> 0x%04X\n", CODE_PTR[0]);
-    printf("EMITTED OPCODE MASK FROM: (BRA -4) -> 0x%04X\n", CODE_PTR[1]);
-    printf("EMITTED OPCODE MASK FROM: (BSR 10) -> 0x%04X\n", CODE_PTR[2]);
-    printf("EMITTED OPCODE MASK FROM: (MACH R2) -> 0x%04X\n", CODE_PTR[3]);
+    printf("EMITTED OPCODE MASK FROM: (BRA 0) -> 0x%04X\n", CODE_PTR[1]);
+    printf("EMITTED OPCODE MASK FROM: (BSR 0) -> 0x%04X\n", CODE_PTR[2]);
+    printf("EMITTED OPCODE MASK FROM: (MACH R0) -> 0x%04X\n", CODE_PTR[3]);
     
     return 0;
 }
