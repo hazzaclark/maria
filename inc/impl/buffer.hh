@@ -20,8 +20,6 @@
 // SYSTEM INCLUDES
 
 #include <cstring>
-#include <vector>
-#include <utility>
 
 namespace maria
 {
@@ -32,7 +30,7 @@ namespace maria
             static constexpr size_t SH2_DEFAULT_BUFFER = 4096;
 
             explicit BUFFER(size_t CAPACITY = SH2_DEFAULT_BUFFER);
-            explicit BUFFER(U8* EXT_BUFFER, size_t CAPACITY, bool OWNERSHIP = false);
+            explicit BUFFER(U8* BUFFER, size_t CAPACITY);
 
             BUFFER(const BUFFER&) = delete;
             BUFFER(BUFFER&& BUFFER_MOVE) noexcept;
@@ -41,8 +39,7 @@ namespace maria
             ~BUFFER() noexcept;
 
             size_t SH2_GET_CAPACITY() const { return _CAPACITY; }
-            const std::vector<U8>& SH2_GET_BUFFER() const { return _BUFFER; }
-            std::vector<U8>& SH2_GET_WRITEABLE_BUFFER() noexcept { return _BUFFER; }
+            U8* SH2_GET_BUFFER() const { return _BUFFER; }
 
             // EMIT ANY ARBITRARY VALUE GIVEN INTO THE MEMORY BUFFER
             // THIS IS THE MAIN ENCOMPASSING FUNCTION BEHIND EVERYTHING
@@ -51,18 +48,16 @@ namespace maria
             template <typename T>
             void SH2_EMIT(T VALUE) noexcept
             {
-                const size_t OLD_SIZE = _BUFFER.size();
-                _BUFFER.resize(OLD_SIZE + sizeof(T));
-                std::memcpy(_BUFFER.data() + OLD_SIZE,, &VALUE, sizeof(T));
-                _CURSOR = _BUFFER.data() + _BUFFER.size();
+                std::memcpy(_CURSOR, &VALUE, sizeof(T));
+                _CURSOR += sizeof(T);
             }
 
             // NOW WE CAN DO THIS FOR ANY SORT OF ARBITARY SIZE OF THE OPERAND
             // PRESUPPOSE ANY AND ALL CONDITION FOR THE INSTRUCTION SIZE
 
-            void SH2_EMIT_WORD(U16 VALUE) noexcept
+            void SH2_EMIT_WORD(U32 VALUE) noexcept
             {
-                SH2_EMIT(VALUE);
+                SH2_EMIT(static_cast<U16>(VALUE));
             }
 
             void SH2_EMIT_LONG(U32 VALUE) noexcept
@@ -76,12 +71,14 @@ namespace maria
             void SH2_STACK_GROW(size_t _CAPACITY);
             bool SH2_MANAGED() const noexcept { return _MANAGE; }
 
-            S32 SH2_CURSOR_OFFSET(void) const { return static_cast<S32>(_CURSOR - _BUFFER.data()); }
+            S32 SH2_CURSOR_OFFSET(void) const noexcept { return _CURSOR - _BUFFER; }
+            U32 SH2_GET_OFFSET_ADDR(S32 OFFSET) const noexcept { return reinterpret_cast<U32>(SH2_GET_OFFSET_PTR(OFFSET)); }
+            U8* SH2_GET_OFFSET_PTR(S32 OFFSET) const noexcept { return _BUFFER + OFFSET; }
 
         // MEMBERS TO HELP WITH CONSTRUCTING METHODS
 
         private:
-            std::vector<U8> _BUFFER;             // BASE MEMORY BUFFER
+            U8* _BUFFER = nullptr;              // BASE MEMORY BUFFER
             U8* _CURSOR = nullptr;              // THE CURRRENT POSITION IN THE BUFFER BEING READ
             size_t _CAPACITY;                      
             bool _MANAGE = false;               // IS THE CURRENT BUFFER HANDLING MEMORY
