@@ -20,6 +20,8 @@
 // SYSTEM INCLUDES
 
 #include <cstring>
+#include <vector>
+#include <utility>
 
 namespace maria
 {
@@ -40,6 +42,7 @@ namespace maria
 
             UNK SH2_GET_CAPACITY() const { return _CAPACITY; }
             const std::vector<U8>& SH2_GET_BUFFER() const { return _BUFFER; }
+            std::vector<U8>& SH2_GET_WRITEABLE_BUFFER() noexcept { return _BUFFER; }
 
             // EMIT ANY ARBITRARY VALUE GIVEN INTO THE MEMORY BUFFER
             // THIS IS THE MAIN ENCOMPASSING FUNCTION BEHIND EVERYTHING
@@ -51,14 +54,15 @@ namespace maria
                 const size_t OLD_SIZE = _BUFFER.size();
                 _BUFFER.resize(OLD_SIZE + sizeof(T));
                 std::memcpy(_BUFFER.data() + OLD_SIZE,, &VALUE, sizeof(T));
+                _CURSOR = _BUFFER.data() + _BUFFER.size();
             }
 
             // NOW WE CAN DO THIS FOR ANY SORT OF ARBITARY SIZE OF THE OPERAND
             // PRESUPPOSE ANY AND ALL CONDITION FOR THE INSTRUCTION SIZE
 
-            void SH2_EMIT_WORD(U32 VALUE) noexcept
+            void SH2_EMIT_WORD(U16 VALUE) noexcept
             {
-                SH2_EMIT(static_cast<U16>(VALUE));
+                SH2_EMIT(VALUE);
             }
 
             void SH2_EMIT_LONG(U32 VALUE) noexcept
