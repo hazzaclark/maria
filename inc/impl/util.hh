@@ -11,7 +11,7 @@
 
 // NESTED INCLUDES
 
-#include <common.h>
+#include <common.hh>
 
 // SYSTEM INCLUDES
 
@@ -76,7 +76,7 @@ namespace maria
     // EXTRAPOLATE THE BYTE OFFSET FOR AN ARBITRARY BRANCH DISPLACEMENT
     // SH2 DEFAULS TO 12 BIT SIGNED WORD OFFSETS SO WE CAN EMULATE THIS SIMPLY
 
-    [[nodiscard]] constexpr U16 SH2_BRANCH_IMM(U32 IMM)
+    constexpr U16 SH2_BRANCH_IMM(U32 IMM)
     {
         const U16 DISP = (IMM >> 1) & 0xFFF;
         return DISP;
