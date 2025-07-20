@@ -12,7 +12,7 @@
 
 // NESTED INCLUDES
 
-#include <common.h>
+#include <common.hh>
 #include <impl/dmac.hh>
 #include <impl/reg.hh>
 #include <impl/util.hh>
@@ -28,11 +28,11 @@ namespace maria
     class BUFFER
     {
         public:
-            static constexpr UNK SH2_MIN_BUFFER = 1024;
-            static constexpr UNK SH2_DEFAULT_BUFFER = 4096;
+            static constexpr size_t SH2_MIN_BUFFER = 1024;
+            static constexpr size_t SH2_DEFAULT_BUFFER = 4096;
 
-            explicit BUFFER(UNK CAPACITY = SH2_DEFAULT_BUFFER);
-            explicit BUFFER(U8* BUFFER, UNK CAPACITY);
+            explicit BUFFER(size_t CAPACITY = SH2_DEFAULT_BUFFER);
+            explicit BUFFER(U8* EXT_BUFFER, size_t CAPACITY, bool OWNERSHIP = false);
 
             BUFFER(const BUFFER&) = delete;
             BUFFER(BUFFER&& BUFFER_MOVE) noexcept;
@@ -40,7 +40,7 @@ namespace maria
 
             ~BUFFER() noexcept;
 
-            UNK SH2_GET_CAPACITY() const { return _CAPACITY; }
+            size_t SH2_GET_CAPACITY() const { return _CAPACITY; }
             const std::vector<U8>& SH2_GET_BUFFER() const { return _BUFFER; }
             std::vector<U8>& SH2_GET_WRITEABLE_BUFFER() noexcept { return _BUFFER; }
 
@@ -73,7 +73,7 @@ namespace maria
             void SH2_EXEC(void);
             void SH2_WRITEABLE(void);
             void SH2_READONLY(void);
-            void SH2_STACK_GROW(UNK _CAPACITY);
+            void SH2_STACK_GROW(size_t _CAPACITY);
             bool SH2_MANAGED() const noexcept { return _MANAGE; }
 
             S32 SH2_CURSOR_OFFSET(void) const { return static_cast<S32>(_CURSOR - _BUFFER.data()); }
@@ -81,9 +81,9 @@ namespace maria
         // MEMBERS TO HELP WITH CONSTRUCTING METHODS
 
         private:
-            std::vector<U8> _BUFFER;              // BASE MEMORY BUFFER
+            std::vector<U8> _BUFFER;             // BASE MEMORY BUFFER
             U8* _CURSOR = nullptr;              // THE CURRRENT POSITION IN THE BUFFER BEING READ
-            UNK _CAPACITY;                      
+            size_t _CAPACITY;                      
             bool _MANAGE = false;               // IS THE CURRENT BUFFER HANDLING MEMORY
     };
 }
