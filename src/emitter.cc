@@ -16,7 +16,7 @@
 
 namespace maria 
 {
-    EMITTER::EMITTER(UNK CAPACITY) : _BUFFER(CAPACITY) {}
+    EMITTER::EMITTER(size_t CAPACITY) : _BUFFER(CAPACITY) {}
     EMITTER::~EMITTER() = default;
     BUFFER& EMITTER::GET_BUFFER() noexcept { return _BUFFER; }
 
@@ -315,12 +315,14 @@ namespace maria
 
     void EMITTER::SH2_STS_MACH(MACH MACH, GP_REGISTER RN) noexcept
     {
-        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, MACH, RN, 0x000A);
+        U16 OPCODE = 0x000A | (RN.GET_INDEX() << 4);
+        _BUFFER.SH2_EMIT_WORD(OPCODE);
     }
 
     void EMITTER::SH2_STS_MACL(MACL MACL, GP_REGISTER RN) noexcept
     {
-        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, MACL, RN, 0x001A);
+        U16 OPCODE = 0x001A | (RN.GET_INDEX() << 4);
+        _BUFFER.SH2_EMIT_WORD(OPCODE);
     }
 
     void EMITTER::SH2_STS_PR(PR PR, GP_REGISTER RN) noexcept
