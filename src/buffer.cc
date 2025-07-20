@@ -24,7 +24,7 @@
 namespace maria
 {
     // SELF ENCAPSULATED MEMORY FLAGS FOR RUNTIME 
-    BUFFER::BUFFER(UNK CAPACITY) :_CAPACITY(CAPACITY), _MANAGE{true} 
+    BUFFER::BUFFER(size_t CAPACITY) :_CAPACITY(CAPACITY), _MANAGE{true} 
     { 
         if(CAPACITY == 0) return;
             
@@ -38,7 +38,7 @@ namespace maria
     
     // NOW WE WILL ACTUALLY CREATE A CONSTRUCTOR
     // THAT ENCOMPASSES THE MAIN BUFFER
-    BUFFER::BUFFER(U8* BUFFER, UNK CAPACITY) : _BUFFER{BUFFER}, _CURSOR{BUFFER}, _CAPACITY{CAPACITY}
+    BUFFER::BUFFER(U8* BUFFER, size_t CAPACITY) : _BUFFER{BUFFER}, _CURSOR{BUFFER}, _CAPACITY{CAPACITY}
     {
         assert(BUFFER != nullptr);
     }
@@ -53,7 +53,7 @@ namespace maria
     BUFFER::BUFFER(BUFFER&& BUFFER_MOVE) noexcept
         :_BUFFER{std::exchange(BUFFER_MOVE._BUFFER, nullptr)}
         , _CURSOR{std::exchange(BUFFER_MOVE._CURSOR, nullptr)}
-        , _CAPACITY{std::exchange(BUFFER_MOVE._CAPACITY, UNK{0})}
+        , _CAPACITY{std::exchange(BUFFER_MOVE._CAPACITY, size_t{0})}
         , _MANAGE{std::exchange(BUFFER_MOVE._MANAGE, false)} {}
 
 
@@ -68,7 +68,7 @@ namespace maria
     // THIS WAY, WE WILL BE ABLE TO SCALE THE BUFFER ACCORDINGLY TO FIT THE SIZE
     // OF THE CONCURRENT OPERANDS AND ANY OTHER PRE-REQ'S
 
-    void BUFFER::SH2_STACK_GROW(UNK NEW_CAPACITY)
+    void BUFFER::SH2_STACK_GROW(size_t NEW_CAPACITY)
     {
         assert(SH2_MANAGED());
 
@@ -83,7 +83,7 @@ namespace maria
         auto SH2_NEW_BUFFER = std::make_unique<U8[]>(NEW_CAPACITY);
 
         // CURRENT SIZE FOR CURSOR POSTION RELATED TO BUFFER
-        UNK CURRENT_SIZE = _CURSOR - _BUFFER;
+        size_t CURRENT_SIZE = _CURSOR - _BUFFER;
 
         // COPY OLD DATA INTO THE NEW IF IT EXISTS
 
