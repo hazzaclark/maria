@@ -39,7 +39,7 @@ namespace maria
             ~BUFFER() noexcept;
 
             UNK SH2_GET_CAPACITY() const { return _CAPACITY; }
-            U8* SH2_GET_BUFFER() const { return _BUFFER; }
+            const std::vector<U8>& SH2_GET_BUFFER() const { return _BUFFER; }
 
             // EMIT ANY ARBITRARY VALUE GIVEN INTO THE MEMORY BUFFER
             // THIS IS THE MAIN ENCOMPASSING FUNCTION BEHIND EVERYTHING
@@ -48,8 +48,9 @@ namespace maria
             template <typename T>
             void SH2_EMIT(T VALUE) noexcept
             {
-                std::memcpy(_CURSOR, &VALUE, sizeof(T));
-                _CURSOR += sizeof(T);
+                const size_t OLD_SIZE = _BUFFER.size();
+                _BUFFER.resize(OLD_SIZE + sizeof(T));
+                std::memcpy(_BUFFER.data() + OLD_SIZE,, &VALUE, sizeof(T));
             }
 
             // NOW WE CAN DO THIS FOR ANY SORT OF ARBITARY SIZE OF THE OPERAND
@@ -71,14 +72,12 @@ namespace maria
             void SH2_STACK_GROW(UNK _CAPACITY);
             bool SH2_MANAGED() const noexcept { return _MANAGE; }
 
-            S32 SH2_CURSOR_OFFSET(void) const noexcept { return _CURSOR - _BUFFER; }
-            U32 SH2_GET_OFFSET_ADDR(S32 OFFSET) const noexcept { return reinterpret_cast<U32>(SH2_GET_OFFSET_PTR(OFFSET)); }
-            U8* SH2_GET_OFFSET_PTR(S32 OFFSET) const noexcept { return _BUFFER + OFFSET; }
+            S32 SH2_CURSOR_OFFSET(void) const { return static_cast<S32>(_CURSOR - _BUFFER.data()); }
 
         // MEMBERS TO HELP WITH CONSTRUCTING METHODS
 
         private:
-            U8* _BUFFER = nullptr;              // BASE MEMORY BUFFER
+            std::vector<U8> _BUFFER;              // BASE MEMORY BUFFER
             U8* _CURSOR = nullptr;              // THE CURRRENT POSITION IN THE BUFFER BEING READ
             UNK _CAPACITY;                      
             bool _MANAGE = false;               // IS THE CURRENT BUFFER HANDLING MEMORY
