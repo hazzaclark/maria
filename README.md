@@ -68,6 +68,32 @@ int main(void)
 EMITTED OPCODE MASK FROM: (ADD R1, R2) 0x312C
 `````
 
+## Features:
+
+One of the most unique and cost-effective features encompassing this Emitter is the surrogate means of being able to use templates.
+
+C++ templates allow us to define generic types which can be filled with any sort of information related.
+
+Through this, I was able to generate templates that follow the instructions and rules encompassing an Opcode def, down to their register specifics, mask type and imm displacment
+
+```cpp
+// THE FOLLOWING PRESUPPOSES ANY GENERIC GPR'S
+// GET EACH OF THE BITS FROM RM AND RN AND EMIT THAT WORDWISE
+
+// SH2 OPCODES WILL ALWAYS ENCOMPASS 16 BITS
+template<typename REG_A, typename REG_B = REG_A>
+inline void SH2_EMIT_R_TYPE(BUFFER& BUFFER, REG_A RN,
+                                    REG_B RM, U16 MASK)
+{
+    const auto OPCODE = MASK |
+    (RN.GET_INDEX() << 8) |
+    (RM.GET_INDEX() << 4);
+
+    BUFFER.SH2_EMIT_WORD(OPCODE);
+}
+```
+
+By encompassing a generic template, we are able to mitigate any confusion and overhead by presupposing the definition of the Opcode against it's characteristics, which means that all we are focussed on is retrieving the Mask that fashions up said Mask (software-quriks and nuances withstanding as those are often register-side) 
 
 # Building:
 
