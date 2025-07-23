@@ -93,7 +93,7 @@ inline void SH2_EMIT_R_TYPE(BUFFER& BUFFER, REG_A RN,
 }
 ```
 
-By encompassing a generic template, we are able to mitigate any confusion and overhead by presupposing the definition of the Opcode against it's characteristics, which means that all we are focussed on is retrieving the Mask that fashions up said Mask (software-quriks and nuances withstanding as those are often register-side) 
+By encompassing a generic template, we are able to mitigate any confusion and overhead by presupposing the definition of the Opcode against it's characteristics. Which means that all we are focussed on is retrieving the Mask that fashions up said Mask (software-quirks and nuances withstanding as those are often register-side) 
 
 # Building:
 
