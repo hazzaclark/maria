@@ -16,6 +16,7 @@
 #include <cassert>
 #include <cstddef>
 #include <cstdint>
+#include <stdexcept>
 
 namespace maria
 {
@@ -23,10 +24,21 @@ namespace maria
     {
         REGISTER() noexcept = default;
 
+        constexpr void SH2_VALID_RANGE(int INDEX)
+        {
+            if(INDEX < 0 || INDEX > 21)
+            {
+                throw std::out_of_range("REGISTERS ARE OUT OF RANGE");
+            }
+        }
+
         // OPTIMISE SPACE FOR DEFINING A REGISTER BUFFER
         // USING STATIC CASTING
         constexpr explicit REGISTER(int INDEX) noexcept
-            : SH2_REG_INDEX(static_cast<std::int8_t>(INDEX)) { }
+            : SH2_REG_INDEX(static_cast<std::int8_t>(INDEX)) 
+            {
+                SH2_VALID_RANGE(INDEX);
+            }
 
             constexpr int GET_INDEX() const noexcept { return SH2_REG_INDEX; }
 
