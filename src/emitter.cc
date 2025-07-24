@@ -260,7 +260,7 @@ namespace maria
 
     void EMITTER::SH2_LDS_L_PR(PR PR, GP_REGISTER RM) noexcept
     {
-        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, PR, RM, 0x4026);
+        SH2_EMIT_DISP_TYPE(_BUFFER, PR, RM, 0x4026);
     }
 
     void EMITTER::SH2_NOP() noexcept
