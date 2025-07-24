@@ -315,14 +315,12 @@ namespace maria
 
     void EMITTER::SH2_STS_MACH(MACH MACH, GP_REGISTER RN) noexcept
     {
-        U16 OPCODE = 0x000A | (RN.GET_INDEX() << 4);
-        _BUFFER.SH2_EMIT_WORD(OPCODE);
+        SH2_EMIT_DISP_TYPE(_BUFFER, MACH, RN, 0x000A);
     }
 
     void EMITTER::SH2_STS_MACL(MACL MACL, GP_REGISTER RN) noexcept
     {
-        U16 OPCODE = 0x001A | (RN.GET_INDEX() << 4);
-        _BUFFER.SH2_EMIT_WORD(OPCODE);
+        SH2_EMIT_DISP_TYPE(_BUFFER, MACL, RN, 0x001A);
     }
 
     void EMITTER::SH2_STS_PR(PR PR, GP_REGISTER RN) noexcept
