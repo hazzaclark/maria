@@ -191,5 +191,14 @@ namespace maria
             {
                 BUFFER.SH2_EMIT_WORD(OPCODE | SH2_BRANCH_IMM(IMM));
             }
+
+            // WE WANT A TEMPLATE TO BE ABLE TO HANDLE A DISPLACEMENT ADJACENT FROM THE SINGLE TYPE
+            // THIS HELPS WITH BEING ABLE TO EXTRACT THE BITS ENCOMPASSING THE DISP
+            template<typename REG_A>
+            inline void SH2_EMIT_DISP_TYPE(BUFFER& BUFFER, REG_A CTRL, GP_REGISTER RN, U16 MASK)
+            {
+                const U16 OPCODE = MASK | (RN.GET_INDEX() << 4);
+                BUFFER.SH2_EMIT_WORD(OPCODE);
+            }
     };
 }
