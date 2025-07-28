@@ -72,7 +72,7 @@ namespace maria
             bool SH2_MANAGED() const noexcept { return _MANAGE; }
 
             S32 SH2_CURSOR_OFFSET(void) const noexcept { return _CURSOR - _BUFFER; }
-            U32 SH2_GET_OFFSET_ADDR(S32 OFFSET) const noexcept { return reinterpret_cast<U32>(SH2_GET_OFFSET_PTR(OFFSET)); }
+            U32 SH2_GET_OFFSET_ADDR(S32 OFFSET) const noexcept { return *(U32*)(SH2_GET_OFFSET_PTR(OFFSET)); }
             U8* SH2_GET_OFFSET_PTR(S32 OFFSET) const noexcept { return _BUFFER + OFFSET; }
 
         // MEMBERS TO HELP WITH CONSTRUCTING METHODS
