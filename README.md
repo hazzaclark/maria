@@ -4,7 +4,7 @@ Lightweight Hitachi SuperH2 Emitter/Generator `````(reference use only)`````
 
 # Motive:
 
-The ambition behind this project is to uncover the intrinsic properties of the Hitachi SuperH2, in regards to how it handles it's innate functionality. Through this, I aim to provide a standalone reference solution for being able to dynamically assemble and generate code in-memory at runtime.
+The ambition behind this project is to uncover the intrinsic properties of the Hitachi SuperH2, in regards to how it handles the patterns encompassing the Opcodes of this processor family. Through this, I aim to provide a standalone reference solution for being able to dynamically assemble and generate code in-memory at runtime.
 
 This reference utility, created in the C++17 standard, aims to provide liaise in uncovering the enigmatic problems that come about with dynamic recompilation for the Hitachi SuperH2, hopefully aiding in subsequent developments.
 
