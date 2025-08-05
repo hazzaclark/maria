@@ -347,4 +347,9 @@ namespace maria
     {
         _BUFFER.SH2_EMIT_WORD(0xC300 | (IMM & 0xFF));
     }
+
+    void EMITTER::SH2_MOV(U32 IMM, GP_REGISTER RM) noexcept
+    {
+        EMITTER::SH2_EMIT_IMM_TYPE(_BUFFER, RM, IMM, 0b1110010100111111);
+    }
 }
