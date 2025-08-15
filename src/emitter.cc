@@ -48,6 +48,11 @@ namespace maria
         EMITTER::SH2_EMIT_R_TYPE(_BUFFER, RM, RN, 0b011000000001111);
     }
 
+    void EMITTER::SH2_AND(GP_REGISTER RM, GP_REGISTER RN) noexcept
+    {
+        EMITTER::SH2_EMIT_R_TYPE(_BUFFER, RM, RN, 0b0010000000001001);
+    }
+
     void EMITTER::SH2_BRA(U32 DISP) noexcept
     {
         SH2_EMIT_B_TYPE(_BUFFER, DISP, 0xA000);
