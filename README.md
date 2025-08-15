@@ -110,3 +110,5 @@ cmake ..
 [SH2 REGISTERS](https://bitsavers.trailing-edge.com/components/hitachi/superH/1995_SH1_SH2_Programming_Manual_3rd_Edition.pdf)
 
 [SH2 OPCODE MASKS](https://www.farnell.com/datasheets/60581.pdf#page=75)
+
+[MORE SH2 OPCODE MASKS](https://shared-ptr.com/sh_insns.html)
